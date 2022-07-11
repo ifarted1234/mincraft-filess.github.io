@@ -1,34 +1,52 @@
 <!doctype html>
+ 
 <script>
-var links = [
-  'https://www.dropbox.com/s/1xvclqcpfkq9yag/Desiry%20-%20Colorful%20Blocks%20-%20R2.zip?dl=1',
-  'https://www.dropbox.com/s/qbo9slgl7rqwb0i/Desiry%20-%20Main%20Blocks%20-%20R2.zip?dl=1',
-  'https://www.dropbox.com/s/cwkk9dj8jaccsl2/Desiry%20-%20Side%20Blocks%20R2.zip?dl=1'
-  'https://www.dropbox.com/s/ilg8dcjoqbhpia4/LEGENDARY%20RT%20TEXTURES%20BASE%20PACK%201024x%20%281.14-1.19%29.zip?dl=1'
-  'https://www.dropbox.com/s/odbxfdbe3ddwtkv/LEGENDARY%20RT%20TEXTURES%20EXTENDED%20PACK%201024x%20%281.14-1.19%29.zip?dl=1'
-  'https://www.dropbox.com/s/mx7qmxm2jebn1iw/LEGENDARY%20RT%20TEXTURES%20FOLIAGE%20PACK%201024x%20%281.14-1.19%29.zip?dl=1'
-  'https://www.dropbox.com/s/pdfafe88sweqawr/LEGENDARY%20RT%20TEXTURES%20NETHER%20%26%20END%20WORLD%20PACK%201024x%20%281.14-1.19%29.zip?dl=1'
-  'https://www.dropbox.com/s/8rzmp82x5xz33km/Realistic%20Grass_1024.zip?dl=1'
-];
 
-function downloadAll(urls) {
-  var link = document.createElement('a');
 
-  link.setAttribute('download', deigo this is not a virus for the last time);
-  link.style.display = 'none';
-
-  document.body.appendChild(link);
-
-  for (var i = 0; i < urls.length; i++) {
-    link.setAttribute('href', urls[i]);
-    link.click();
+function download_files(files) {
+  function download_next(i) {
+    if (i >= files.length) {
+      return;
+    }
+    var a = document.createElement('a');
+    a.href = files[i].download;
+    a.target = '_parent';
+    // Use a.download if available, it prevents plugins from opening.
+    if ('download' in a) {
+      a.download = files[i].filename;
+    }
+    // Add a to the doc for click to work.
+    (document.body || document.documentElement).appendChild(a);
+    if (a.click) {
+      a.click(); // The click method is supported by most browsers.
+    } else {
+      $(a).click(); // Backup using jquery
+    }
+    // Delete the temporary link.
+    a.parentNode.removeChild(a);
+    // Download the next file with a small timeout. The timeout is necessary
+    // for IE, which will otherwise only download the first file.
+    setTimeout(function() {
+      download_next(i + 1);
+    }, 500);
   }
-
-  document.body.removeChild(link);
+  // Initiate the first download.
+  download_next(0);
 }
   </script>
-
-<button onclick="downloadAll(window.links)">Test me!</button>
-
- 
-
+<script>
+  function do_dl() {
+    download_files([
+     
+      { download: "https://www.dropbox.com/s/1xvclqcpfkq9yag/Desiry%20-%20Colorful%20Blocks%20-%20R2.zip?dl=0", filename: "not virus deigo" },
+      { download: "https://www.dropbox.com/s/qbo9slgl7rqwb0i/Desiry%20-%20Main%20Blocks%20-%20R2.zip?dl=0", filename: "not virus deigo" },
+        { download: "https://www.dropbox.com/s/cwkk9dj8jaccsl2/Desiry%20-%20Side%20Blocks%20R2.zip?dl=0", filename: "not virus deigo" },
+      { download: "https://www.dropbox.com/s/ilg8dcjoqbhpia4/LEGENDARY%20RT%20TEXTURES%20BASE%20PACK%201024x%20%281.14-1.19%29.zip?dl=0", filename: "not virus deigo" },
+      { download: "https://www.dropbox.com/s/odbxfdbe3ddwtkv/LEGENDARY%20RT%20TEXTURES%20EXTENDED%20PACK%201024x%20%281.14-1.19%29.zip?dl=0", filename: "not virus deigo" },
+        { download: "https://www.dropbox.com/s/mx7qmxm2jebn1iw/LEGENDARY%20RT%20TEXTURES%20FOLIAGE%20PACK%201024x%20%281.14-1.19%29.zip?dl=0", filename: "not virus deigo" },
+      { download: "https://www.dropbox.com/s/pdfafe88sweqawr/LEGENDARY%20RT%20TEXTURES%20NETHER%20%26%20END%20WORLD%20PACK%201024x%20%281.14-1.19%29.zip?dl=0", filename: "not virus deigo" },
+      { download: "https://www.dropbox.com/s/8rzmp82x5xz33km/Realistic%20Grass_1024.zip?dl=0", filename: "not virus deigo" },
+    ]);
+  };
+</script>
+<button onclick="do_dl();">Test downloading 3 text files.</button>
